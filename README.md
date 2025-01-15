@@ -1,7 +1,7 @@
 # Drumset Music Generator
 
 The **Drumset Music Generator** is a web-based tool designed to create dynamic comping patterns for jazz swing beats. Users can customize difficulty levels, choose between snare and bass drum voices, and control the number of measures generated. This tool is ideal for drummers aiming to improve rhythm and coordination through diverse practice patterns.
-
+https://jctimpani.github.io/SwingComp/docs/
 ---
 
 ## Features
