@@ -1,28 +1,44 @@
-# Drumset Music Generator
+# Swing Comp Drumset Generator
 
-The **Drumset Music Generator** is a web-based tool designed to create dynamic comping patterns for jazz swing beats. Users can customize difficulty levels, choose between snare and bass drum voices, and control the number of measures generated. This tool is ideal for drummers aiming to improve rhythm and coordination through diverse practice patterns.
-https://jctimpani.github.io/SwingComp/
----
+Swing Comp is a web app that generates random jazz swing coordination material for drumset practice.
+It renders readable notation in the browser using VexFlow and lets you quickly vary density, orchestration, and form length.
 
-## Features
+Live site: `https://jctimpani.github.io/SwingComp/`
 
-- **Difficulty Levels**:
-  - **Level 1**: Generates notes only on the downbeats (1, 2, 3, 4).
-  - **Level 2**: Includes downbeats and the third partial of triplets.
-  - **Level 3**: Full triplet pattern complexity (all subdivisions).
-- **Voice Selection**:
-  - Snare drum only.
-  - Bass drum only.
-  - Both snare and bass drum.
-- **Measure Customization**: Specify the number of measures to generate.
-- **Random Pattern Generation**: Ensures unique patterns every session to keep practice sessions dynamic.
+## What It Does
 
----
+- Generates one-measure swing ride ostinato patterns combined with random snare/bass comping notes.
+- Supports three difficulty levels for where notes are allowed in the triplet grid.
+- Lets you choose `Snare`, `Bass`, or `Both` voices.
+- Generates multiple measures at once with selectable measure counts.
 
-## Technologies Used
+## Controls
 
-- **HTML**: For structuring the user interface.
-- **CSS**: For responsive design and layout styling.
-- **JavaScript**: Handles functionality using [VexFlow](https://www.vexflow.com/) to render sheet music.
+- `Number of Measures`: `1, 2, 4, 8, 12, 16, 24, 32, 48, 64`
+- `Select Difficulty`:
+  - `Level 1`: Downbeats only
+  - `Level 2`: Downbeats + 3rd triplet partial
+  - `Level 3`: All triplet partials
+- `Choose a voice`:
+  - `Snare Only`
+  - `Bass Only`
+  - `Both`
 
----
+## UI Notes
+
+- The music output area is hidden until `Generate Music` is clicked.
+- Settings can be collapsed/expanded with `Hide Settings` and `Show Settings`.
+
+## Project Structure
+
+- `docs/index.html`: Main UI markup
+- `docs/assets/css/styles.css`: App styling
+- `docs/assets/css/navBar.css`: Navbar styling
+- `docs/assets/js/test.js`: Music generation and rendering logic
+
+## Tech Stack
+
+- HTML
+- CSS
+- JavaScript
+- [VexFlow](https://www.vexflow.com/)
