@@ -1,9 +1,9 @@
-# Swing Comp Drumset Generator
+# SwingComp 
 
-Swing Comp is a web app that generates random jazz swing coordination material for drumset practice.
+SwingComp is a web app that generates random jazz swing coordination material for drumset practice.
 It renders readable notation in the browser using VexFlow and lets you quickly vary density, orchestration, and form length.
 
-Live site: "https://jctimpani.github.io/SwingComp/"
+Live site: https://jctimpani.github.io/SwingComp/
 
 ## What It Does
 
