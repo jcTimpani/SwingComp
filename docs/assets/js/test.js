@@ -17,11 +17,13 @@
 
         const renderer = new VF.Renderer(div, VF.Renderer.Backends.SVG);
 
-        // Determine the stave width and layout based on the number of measures
-        const staveWidth = numMeasures === 1 ? 700 : 350; // Full width for single measure, half for multiple
+        // Determine the stave width and layout based on the number of measures.
+        const measuresPerLine = numMeasures >= 4 ? 4 : (numMeasures === 1 ? 1 : 2);
+        const staveWidth = measuresPerLine === 1 ? 1200 : (measuresPerLine === 2 ? 560 : 300);
         const heightPerLine = 150;
-        const numLines = Math.ceil(numMeasures / 2);
-        renderer.resize(800, numLines * heightPerLine);
+        const numLines = Math.ceil(numMeasures / measuresPerLine);
+        const rendererWidth = (staveWidth * measuresPerLine) + 20;
+        renderer.resize(rendererWidth, numLines * heightPerLine);
 
         const context = renderer.getContext();
 
@@ -102,8 +104,8 @@
 
 
         for (let measure = 0; measure < numMeasures; measure++) {
-            const lineIndex = Math.floor(measure / 2); // Track which line (row) the stave is on
-            const xOffset = (measure % 2) * staveWidth; // Move right by staveWidth for the second measure
+            const lineIndex = Math.floor(measure / measuresPerLine); // Track which line (row) the stave is on
+            const xOffset = (measure % measuresPerLine) * staveWidth;
 
             // Create a stave for each measure
             const stave = new VF.Stave(10 + xOffset, 40 + (lineIndex * heightPerLine), staveWidth);
@@ -112,6 +114,12 @@
             }
 
             stave.setContext(context).draw();
+
+            // Show measure numbers every 4 bars (1, 5, 9, ...).
+            if (measure % 4 === 0) {
+                context.setFont("Space Grotesk", 12, "600");
+                context.fillText(String(measure + 1), stave.getX() + 4, stave.getY() - 8);
+            }
 
             // Generate a unique ostinato for each measure
             const combinedArray = generateOstinato();
@@ -196,8 +204,9 @@
             const voice = new VF.Voice({ num_beats: 4, beat_value: 4 });
             voice.addTickables(notes);
 
-            // Format and justify the notes to fit within each stave
-            new VF.Formatter().joinVoices([voice]).format([voice], staveWidth - 50);
+            // Format notes to the true drawable width between the stave's start/end note bounds.
+            const noteAreaWidth = (stave.getNoteEndX() - stave.getNoteStartX()) - 8;
+            new VF.Formatter().joinVoices([voice]).format([voice], noteAreaWidth);
 
             // Render the voice and notes
             voice.draw(context, stave);
