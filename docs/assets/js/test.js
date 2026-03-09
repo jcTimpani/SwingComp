@@ -1,18 +1,18 @@
 ﻿window.onload = function () {
     const VF = Vex.Flow;
+    const settingsPanel = document.getElementById("settings-panel");
+    const toggleControlsBtn = document.getElementById("toggle-controls-btn");
 
-    // Function to reset the page to its original state (clear the output)
-    function resetPage() {
-        document.getElementById("output").innerHTML = "";
-        const goBackBtn = document.getElementById("go-back-btn");
-        if (goBackBtn) {
-            goBackBtn.remove();
-        }
-    }
+    toggleControlsBtn.addEventListener("click", function () {
+        const isCollapsed = settingsPanel.classList.toggle("controls-collapsed");
+        toggleControlsBtn.textContent = isCollapsed ? "Show Settings" : "Hide Settings";
+        toggleControlsBtn.setAttribute("aria-expanded", (!isCollapsed).toString());
+    });
 
     // Function to convert the combined array into sheet music
     function generateSheetMusic(numMeasures) {
         const div = document.getElementById("output");
+        div.classList.remove("is-hidden");
         div.innerHTML = "";
 
         const renderer = new VF.Renderer(div, VF.Renderer.Backends.SVG);
@@ -116,69 +116,79 @@
             // Generate a unique ostinato for each measure
             const combinedArray = generateOstinato();
 
-            // Helper function to map elements of the array to musical notes
+            // Helper function to map elements of the array to musical note keys
             function getNoteFromChar(char) {
-                let duration = "8"; // Treat all notes as eighth notes (triplet feel)
                 switch (char) {
                     case "r": // Ride cymbal
-                        return { key: "f/5/x2", duration };
+                        return { key: "f/5/x2" };
                     case "h": // Hi-hat
-                        return { key: "d/4/x2", duration };
+                        return { key: "d/4/x2" };
                     case "s": // Snare
-                        return { key: "c/5", duration };
+                        return { key: "c/5" };
                     case "b": // Bass drum
-                        return { key: "f/4", duration };
+                        return { key: "f/4" };
                     case "x": // Rest
-                        return { key: "c/5", duration: "8r" }; // Always generate rests as eighth notes
+                        return { key: "c/5" };
                     default:
                         console.error("Invalid character encountered: " + char);
                         return null;
                 }
             }
 
-            // Create notes for the combined array
-            const notes = [];
-            for (let i = 0; i < combinedArray.length; i++) {
-                const combo = combinedArray[i];
-                const comboChars = combo.split(""); // Split "rs" into ["r", "s"]
-
-                // Filter out "x" if another note is present
-                const filteredChars = comboChars.filter(c => c !== "x");
-
-                // If there are no notes left after filtering (i.e., only "x"), it should be a rest
-                if (filteredChars.length === 0) {
-                    notes.push(new VF.StaveNote({
-                        keys: ["c/5"], // A proper rest note
-                        duration: "8r", // Eighth note rest
-                        clef: "percussion"
-                    }));
-                } else {
-                    const keys = filteredChars.map(c => getNoteFromChar(c).key);
-                    notes.push(new VF.StaveNote({
-                        keys: keys,
-                        duration: "8", // Treat every note as an eighth note
-                        clef: "percussion"
-                    }));
-                }
+            function getPlayableChars(combo) {
+                return combo.split("").filter(c => c !== "x");
             }
 
-            // Group notes into triplets and handle beaming
+            function createNoteFromCombo(combo, noteDuration, restDuration) {
+                const playableChars = getPlayableChars(combo);
+                if (playableChars.length === 0) {
+                    return new VF.StaveNote({
+                        keys: ["c/5"],
+                        duration: restDuration,
+                        clef: "percussion"
+                    });
+                }
+
+                const keys = playableChars.map(c => getNoteFromChar(c).key);
+                return new VF.StaveNote({
+                    keys: keys,
+                    duration: noteDuration,
+                    clef: "percussion"
+                });
+            }
+
+            // Create notes beat-by-beat so first-partial-only triplets become quarter notes.
+            const notes = [];
             const triplets = [];
             const beams = [];
-            for (let i = 0; i < notes.length; i += 3) {
-                if (i + 3 <= notes.length) {
-                    const tripletNotes = notes.slice(i, i + 3);
-                    triplets.push(new VF.Tuplet(tripletNotes));
+            for (let i = 0; i < combinedArray.length; i += 3) {
+                const beatCombos = combinedArray.slice(i, i + 3);
+                const firstHasNote = getPlayableChars(beatCombos[0]).length > 0;
+                const secondHasNote = getPlayableChars(beatCombos[1]).length > 0;
+                const thirdHasNote = getPlayableChars(beatCombos[2]).length > 0;
 
-                    // Only beam the first two notes if the last one is a rest
-                    const noRestInLast = !tripletNotes[2].isRest();
-                    const noRestInFirstTwo = !tripletNotes[0].isRest() && !tripletNotes[1].isRest();
+                if (firstHasNote && !secondHasNote && !thirdHasNote) {
+                    notes.push(createNoteFromCombo(beatCombos[0], "q", "qr"));
+                    continue;
+                }
 
-                    if (noRestInLast) {
-                        beams.push(new VF.Beam(tripletNotes)); // Beam all three
-                    } else if (noRestInFirstTwo) {
-                        beams.push(new VF.Beam(tripletNotes.slice(0, 2))); // Only beam first two
-                    }
+                const tripletNotes = [
+                    createNoteFromCombo(beatCombos[0], "8", "8r"),
+                    createNoteFromCombo(beatCombos[1], "8", "8r"),
+                    createNoteFromCombo(beatCombos[2], "8", "8r")
+                ];
+
+                notes.push(...tripletNotes);
+                triplets.push(new VF.Tuplet(tripletNotes));
+
+                // Only beam the first two notes if the last one is a rest
+                const noRestInLast = !tripletNotes[2].isRest();
+                const noRestInFirstTwo = !tripletNotes[0].isRest() && !tripletNotes[1].isRest();
+
+                if (noRestInLast) {
+                    beams.push(new VF.Beam(tripletNotes)); // Beam all three
+                } else if (noRestInFirstTwo) {
+                    beams.push(new VF.Beam(tripletNotes.slice(0, 2))); // Only beam first two
                 }
             }
 
@@ -203,11 +213,6 @@
             });
         }
 
-        const goBackBtn = document.createElement("button");
-        goBackBtn.id = "go-back-btn";
-        goBackBtn.textContent = "Go Back";
-        goBackBtn.addEventListener("click", resetPage);
-        div.appendChild(goBackBtn);
     }
 
     // Button click event to generate music
