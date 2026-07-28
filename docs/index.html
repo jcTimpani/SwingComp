@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Drumset Music Generator</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Syne:wght@600;700;800&display=swap" rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Syne:wght@600;700;800&display=swap"
+        rel="stylesheet" />
 
     <!-- Include External CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
@@ -24,12 +27,13 @@
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container">
                 <a class="navbar-brand" href="#">Swing Comp</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-auto">
-                        
+
                     </ul>
                 </div>
             </div>
@@ -50,34 +54,55 @@
                 <button type="button" id="toggle-controls-btn" aria-expanded="true">Hide Settings</button>
 
                 <form id="ostinato-form">
+                    <label for="num-measures">Number of Measures:</label>
+                    <select id="num-measures">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="4" selected>4</option>
+                        <option value="8">8</option>
+                        <option value="12">12</option>
+                        <option value="16">16</option>
+                        <option value="24">24</option>
+                        <option value="32">32</option>
+                        <option value="48">48</option>
+                        <option value="64">64</option>
+                    </select>
 
-                <label for="num-measures">Number of Measures:</label>
-                <select id="num-measures">
-                    <option value="1" selected>1</option>
-                    <option value="2">2</option>
-                    <option value="4">4</option>
-                    <option value="8">8</option>
-                    <option value="12">12</option>
-                    <option value="16">16</option>
-                    <option value="24">24</option>
-                    <option value="32">32</option>
-                    <option value="48">48</option>
-                    <option value="64">64</option>
-                </select>
+                    <label for="difficulty">Select Difficulty:</label>
+                    <select id="difficulty">
+                        <option value="1">Level 1 - Downbeats only</option>
+                        <option value="2" selected>Level 2 - Downbeats and 3rd triplet partial</option>
+                        <option value="3">Level 3 - All triplets</option>
+                    </select>
 
-                <label for="difficulty">Select Difficulty:</label>
-                <select id="difficulty">
-                    <option value="1">Level 1 - Downbeats only</option>
-                    <option value="2">Level 2 - Downbeats and 3rd triplet partial</option>
-                    <option value="3">Level 3 - All triplets</option>
-                </select>
+                    <div class="density-control">
+                        <label for="density-slider">Density</label>
+                        <div class="density-slider-wrap">
+                            <input type="range" id="density-slider" min="1" max="3" step="1" value="2" />
+                        </div>
+                    </div>
 
-                <label for="voice-select">Choose a voice:</label>
-                <select id="voice-select">
-                    <option value="snare">Snare Only</option>
-                    <option value="bass">Bass Only</option>
-                    <option value="both">Both</option>
-                </select>
+                    <label class="checkbox-group-label">Choose Voices:</label>
+                    <div class="checkbox-group">
+                        <label class="checkbox-option">
+                            <input type="checkbox" id="snare-checkbox" checked />
+                            Snare
+                        </label>
+
+                        <label class="checkbox-option">
+                            <input type="checkbox" id="bass-checkbox" checked />
+                            Bass
+                        </label>
+
+                        <label class="checkbox-option">
+                            <input type="checkbox" id="hihat-checkbox" />
+                            Hi-Hat
+                        </label>
+                    </div>
+                    <label class="checkbox-control">
+                        <input type="checkbox" id="ride-ostinato" />
+                        <span>Show Ride/HH Ostinato</span>
+                    </label>
 
                     <button type="button" id="generate-btn">Generate Music</button>
                 </form>
@@ -98,4 +123,5 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
     <script src="assets/js/test.js"></script>
 </body>
+
 </html>
