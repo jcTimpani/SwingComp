@@ -1,0 +1,81 @@
+﻿.navbar {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background: linear-gradient(104deg, rgba(16, 28, 41, 0.94), rgba(29, 56, 78, 0.92) 58%, rgba(39, 84, 99, 0.9)) !important;
+    border-bottom: 1px solid rgba(140, 177, 209, 0.34);
+    box-shadow: 0 10px 28px rgba(5, 11, 18, 0.42);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    padding: 0.4rem 0;
+}
+
+.navbar .container {
+    max-width: 1320px;
+    min-height: 3.2rem;
+}
+
+.navbar-brand {
+    font-family: "Syne", "Trebuchet MS", sans-serif;
+    font-size: 1.28rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    color: #f2f7fb !important;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.25rem 0;
+    text-shadow: 0 1px 8px rgba(31, 199, 178, 0.35);
+}
+
+.navbar-brand::before {
+    content: "";
+    width: 0.72rem;
+    height: 0.72rem;
+    border-radius: 999px;
+    background: radial-gradient(circle at 35% 35%, #ffd08a, #ff7a3d 70%);
+    box-shadow: 0 0 0 2px rgba(255, 122, 61, 0.2), 0 0 14px rgba(255, 122, 61, 0.48);
+}
+
+.navbar-nav .nav-item .nav-link {
+    padding: 0.46rem 0.9rem;
+    font-size: 0.98rem;
+    border-radius: 999px;
+    color: rgba(242, 247, 251, 0.84);
+    transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+.navbar-nav .nav-link:hover,
+.navbar-dark .navbar-nav .nav-link.active,
+.navbar-dark .navbar-nav .nav-link:focus,
+.navbar-dark .navbar-nav .nav-link:hover {
+    color: #fff;
+    background-color: rgba(255, 255, 255, 0.17);
+    transform: translateY(-1px);
+}
+
+.navbar-toggler {
+    border-color: rgba(214, 232, 248, 0.52);
+    border-radius: 0.65rem;
+    padding: 0.28rem 0.5rem;
+    background: rgba(12, 21, 31, 0.45);
+}
+
+.navbar-toggler:focus {
+    outline: none;
+    box-shadow: 0 0 0 0.22rem rgba(82, 205, 190, 0.35);
+}
+
+@media (max-width: 768px) {
+    .navbar {
+        padding: 0.35rem 0;
+    }
+
+    .navbar .container {
+        min-height: 2.9rem;
+    }
+
+    .navbar-brand {
+        font-size: 1.12rem;
+    }
+}
