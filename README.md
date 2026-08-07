@@ -1,5 +1,5 @@
 ## Features
-## Live Site
+### Live Site
 https://jctimpani.github.io/SwingComp/
 ### Exercise Generation
 
