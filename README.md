@@ -6,10 +6,10 @@ SwingComp is a web application that generates randomized jazz swing coordination
 
 ### Exercise Generation
 
-- Random jazz swing coordination exercises.
+- Random coordination patterns.
 - Optional swing ride cymbal ostinato.
 - Independent Snare, Bass Drum, and Hi-Hat voices.
-- Generate from **1–64 measures**.
+- Generates from **1–64 measures**.
 - Standard percussion notation rendered with VexFlow.
 
 ### Difficulty
