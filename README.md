@@ -1,7 +1,7 @@
 # SwingComp
 SwingComp is a web application that generates randomized jazz swing coordination exercises for drum set practice. Users can customize exercise length, rhythmic difficulty, note density, instrument voices, and ride cymbal accompaniment to create unlimited practice material tailored to their skill level.
 ### Live Site
-jctimpani.github.io/SwingComp
+[SwingComp](https://jctimpani.github.io/SwingComp/)
 ## What it does
 
 ### Exercise Generation
