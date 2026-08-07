@@ -1,44 +1,46 @@
-# SwingComp 
+## Features
 
-SwingComp is a web app that generates random jazz swing coordination material for drumset practice.
-It renders readable notation in the browser using VexFlow and lets you quickly vary density, orchestration, and form length.
+### Exercise Generation
 
-Live site: https://jctimpani.github.io/SwingComp/
+- Random jazz swing coordination exercises.
+- Optional swing ride cymbal ostinato.
+- Independent Snare, Bass Drum, and Hi-Hat voices.
+- Generate from **1–64 measures**.
+- Standard percussion notation rendered with VexFlow.
 
-## What It Does
+### Difficulty
 
-- Generates one-measure swing ride ostinato patterns combined with random snare/bass comping notes.
-- Supports three difficulty levels for where notes are allowed in the triplet grid.
-- Lets you choose `Snare`, `Bass`, or `Both` voices.
-- Generates multiple measures at once with selectable measure counts.
+Controls **where notes may appear**.
 
-## Controls
+| Level | Allowed Rhythms |
+|-------|------------------|
+| 1 | Downbeats only |
+| 2 | Downbeats + third triplet partial |
+| 3 | Full triplet grid |
 
-- `Number of Measures`: `1, 2, 4, 8, 12, 16, 24, 32, 48, 64`
-- `Select Difficulty`:
-  - `Level 1`: Downbeats only
-  - `Level 2`: Downbeats + 3rd triplet partial
-  - `Level 3`: All triplet partials
-- `Choose a voice`:
-  - `Snare Only`
-  - `Bass Only`
-  - `Both`
+### Density
 
-## UI Notes
+Controls **how many notes are generated**.
 
-- The music output area is hidden until `Generate Music` is clicked.
-- Settings can be collapsed/expanded with `Hide Settings` and `Show Settings`.
+| Density | Approximate Fill |
+|---------|------------------|
+| 1 | 25–45% of available positions |
+| 2 | 45–70% |
+| 3 | 70–100% |
 
-## Project Structure
+### Intelligent Randomization
 
-- `docs/index.html`: Main UI markup
-- `docs/assets/css/styles.css`: App styling
-- `docs/assets/css/navBar.css`: Navbar styling
-- `docs/assets/js/test.js`: Music generation and rendering logic
+SwingComp generates exercises using several musical constraints:
 
-## Tech Stack
+- Prevents more than **3 consecutive snare** notes.
+- Prevents more than **2 consecutive bass drum** notes.
+- Prevents **consecutive hi-hat** notes.
+- Randomizes note placement while respecting the selected Difficulty and Density.
+- Generates unique exercises every time.
 
-- HTML
-- CSS
-- JavaScript
-- [VexFlow](https://www.vexflow.com/)
+### Interface
+
+- Collapsible settings panel.
+- Measure numbers every four bars.
+- Responsive staff layout.
+- SVG notation rendering.
