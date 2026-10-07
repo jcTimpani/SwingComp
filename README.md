@@ -28,8 +28,8 @@ Controls **how many notes are generated**.
 | Density | Approximate Fill |
 |---------|------------------|
 | 1 | 25–45% of available positions |
-| 2 | 45–70% |
-| 3 | 70–100% |
+| 2 | 45–70% of available positions |
+| 3 | 70–100% of available positions |
 
 ### Intelligent Randomization
 
